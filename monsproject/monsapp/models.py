@@ -9,7 +9,7 @@ class License(models.Model):
     is_active = models.BooleanField(default=True, verbose_name=_('Активна'))
 
     class Meta:
-        verbose_name = _('Лицензия')
+        verbose_name = _('Лицензию')
         verbose_name_plural = _('Лицензии')
 
     def __str__(self):
@@ -18,14 +18,16 @@ class License(models.Model):
 
 class Statistics(models.Model):
     full_name = models.CharField(max_length=255, verbose_name=_('ФИО'))
-    date = models.DateField(verbose_name=_('Дата'))
-    time = models.TimeField(verbose_name=_('Время прохождения'))
+    date = models.DateTimeField(verbose_name=_('Дата и время прохождения теста'))  # Изменено на DateTimeField
+    time = models.CharField(max_length=5, verbose_name=_('Время прохождения'), help_text=_("Формат: ММ:СС"))  # Изменено на CharField с примером
+
+
     respirator_provided = models.BooleanField(default=False, verbose_name=_('Выдан самоспасатель'))
     headlamp_provided = models.BooleanField(default=False, verbose_name=_('Выдана головная лампа'))
     respirator_used = models.BooleanField(default=False, verbose_name=_('Использован самоспасатель'))
 
     class Meta:
-        verbose_name = _('Статистика')
+        verbose_name = _('Статистику')
         verbose_name_plural = _('Статистики')
 
     def __str__(self):
