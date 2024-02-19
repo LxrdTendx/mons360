@@ -14,3 +14,19 @@ class License(models.Model):
 
     def __str__(self):
         return self.license_key
+
+
+class Statistics(models.Model):
+    full_name = models.CharField(max_length=255, verbose_name=_('ФИО'))
+    date = models.DateField(verbose_name=_('Дата'))
+    time = models.TimeField(verbose_name=_('Время прохождения'))
+    respirator_provided = models.BooleanField(default=False, verbose_name=_('Выдан самоспасатель'))
+    headlamp_provided = models.BooleanField(default=False, verbose_name=_('Выдана головная лампа'))
+    respirator_used = models.BooleanField(default=False, verbose_name=_('Использован самоспасатель'))
+
+    class Meta:
+        verbose_name = _('Статистика')
+        verbose_name_plural = _('Статистики')
+
+    def __str__(self):
+        return self.full_name
