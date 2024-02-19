@@ -25,6 +25,7 @@ class Statistics(models.Model):
     respirator_provided = models.BooleanField(default=False, verbose_name=_('Выдан самоспасатель'))
     headlamp_provided = models.BooleanField(default=False, verbose_name=_('Выдана головная лампа'))
     respirator_used = models.BooleanField(default=False, verbose_name=_('Использован самоспасатель'))
+    phone_message = models.BooleanField(default=False, verbose_name=_('Сообщил о ЧС'))
 
     class Meta:
         verbose_name = _('Статистику')

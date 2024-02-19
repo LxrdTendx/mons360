@@ -9,4 +9,4 @@ class LicenseSerializer(serializers.ModelSerializer):
 class StatisticsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Statistics
-        fields = ['full_name', 'date', 'time', 'respirator_provided', 'headlamp_provided', 'respirator_used']
+        fields = ['full_name', 'date', 'time', 'respirator_provided', 'headlamp_provided', 'respirator_used', 'phone_message']
