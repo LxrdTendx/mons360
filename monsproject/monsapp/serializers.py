@@ -1,12 +1,21 @@
 from rest_framework import serializers
-from .models import License, Statistics
+from .models import License, Statistics, Product
 
 class LicenseSerializer(serializers.ModelSerializer):
     class Meta:
         model = License
         fields = ['user', 'license_key', 'expiry_date', 'is_active']
 
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'name', 'version', 'release_date']
+
 class StatisticsSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+    product_id = serializers.PrimaryKeyRelatedField(
+        queryset=Product.objects.all(), source='product', write_only=True)
+
     class Meta:
         model = Statistics
-        fields = ['full_name', 'date', 'time', 'respirator_provided', 'headlamp_provided', 'respirator_used', 'phone_message']
+        fields = ['product', 'product_id', 'full_name', 'date', 'time', 'respirator_provided', 'headlamp_provided', 'respirator_used', 'phone_message']
