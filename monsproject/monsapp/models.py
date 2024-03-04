@@ -46,6 +46,7 @@ class Statistics(models.Model):
     headlamp_provided = models.BooleanField(default=False, verbose_name='Выдана головная лампа')
     respirator_used = models.BooleanField(default=False, verbose_name='Использован самоспасатель')
     phone_message = models.BooleanField(default=False, verbose_name='Сообщил о ЧС')
+    login_user = models.CharField(max_length=255, verbose_name='Пользователь', default='sownh')
 
     class Meta:
         verbose_name = 'Статистику Mons360'

@@ -8,7 +8,7 @@ class LicenseAdmin(admin.ModelAdmin):
     search_fields = ('user__username', 'license_key')
 
 class StatisticsAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'date', 'time', 'respirator_provided', 'headlamp_provided', 'respirator_used', 'phone_message')
+    list_display = ('full_name', 'login_user','date', 'time', 'respirator_provided', 'headlamp_provided', 'respirator_used', 'phone_message')
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'release_date', 'file')  # Отображаемые поля в списке

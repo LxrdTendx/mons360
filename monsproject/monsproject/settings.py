@@ -134,3 +134,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Максимальный размер файла, который будет загружен в память. Установите в None для отключения ограничения.
+FILE_UPLOAD_MAX_MEMORY_SIZE = None
+
+# Максимальный размер данных, который разрешено загрузить. Установите в None для отключения ограничения.
+DATA_UPLOAD_MAX_MEMORY_SIZE = None
+
+FILE_UPLOAD_HANDLERS = ["django.core.files.uploadhandler.TemporaryFileUploadHandler"]
