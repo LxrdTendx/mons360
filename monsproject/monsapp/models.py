@@ -8,6 +8,7 @@ class Product(models.Model):
     file = models.FileField(upload_to='products/%Y/%m/%d/', verbose_name=_('Файл продукта'), null=True, blank=True)  # Путь, куда будут сохраняться файлы
     release_date = models.DateTimeField(verbose_name=_('Дата и время релиза'), null=True, blank=True)  # Изменено на DateTimeField
     version = models.CharField(max_length=20, verbose_name=_('Версия'), null=True, blank=True)
+    url = models.CharField(max_length=400, verbose_name=_('Ссылка на гугл диск'), null=True, default='url')
     class Meta:
         verbose_name = _('Продукт')
         verbose_name_plural = _('Продукты')

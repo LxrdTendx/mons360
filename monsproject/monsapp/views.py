@@ -14,10 +14,10 @@ class ProductFileDownload(APIView):
     def get(self, request, *args, **kwargs):
         product_id = kwargs.get('product_id')
         product = get_object_or_404(Product, pk=product_id)
-        if product.file:
-            return FileResponse(product.file.open(), as_attachment=True, filename=product.file.name)
+        if product.url:
+            return Response({"url": product.url})
         else:
-            return Response({"message": "File not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"message": "URL not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
 class LicenseCheck(APIView):

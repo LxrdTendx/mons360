@@ -9,7 +9,7 @@ class LicenseSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'name', 'version', 'release_date']
+        fields = ['id', 'name', 'version', 'release_date', 'url']
 
 class StatisticsSerializer(serializers.ModelSerializer):
     product = ProductSerializer(read_only=True)
