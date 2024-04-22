@@ -9,6 +9,74 @@ from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
 from django.db.models import Q
 from django.http import FileResponse
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import render, redirect
+from django.utils.timezone import make_naive
+import pandas as pd
+from django.conf import settings
+from django.http import HttpResponse
+from django.shortcuts import redirect
+from .models import Statistics
+import pytz
+
+
+def download_statistics(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    timezone = pytz.timezone(settings.TIME_ZONE)  # Создание объекта временной зоны
+
+    data = []
+    for stat in Statistics.objects.filter(login_user=request.user.username):
+        stat_dict = {
+            'full_name': stat.full_name,
+            'date': make_naive(stat.date, timezone) if stat.date else None,  # Исправление здесь
+            'time': stat.time,
+            'respirator_provided': 'Да' if stat.respirator_provided else 'Нет',
+            'headlamp_provided': 'Да' if stat.headlamp_provided else 'Нет',
+            'respirator_used': 'Да' if stat.respirator_used else 'Нет',
+            'phone_message': 'Да' if stat.phone_message else 'Нет',
+            'login_user': stat.login_user,
+            'mission_complete': 'Да' if stat.mission_complete else 'Нет'
+        }
+        data.append(stat_dict)
+
+    df = pd.DataFrame(data)
+
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    )
+    response['Content-Disposition'] = 'attachment; filename="statistics.xlsx"'
+
+    with pd.ExcelWriter(response, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False, sheet_name='Статистика')
+
+    return response
+
+
+def user_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('user-statistics')  # Перенаправление на страницу со статистикой
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
+
+
+def user_statistics(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    stats = Statistics.objects.filter(login_user=request.user.username)
+    return render(request, 'user_statistics.html', {'statistics': stats})
+
+
 
 class ProductFileDownload(APIView):
     def get(self, request, *args, **kwargs):
