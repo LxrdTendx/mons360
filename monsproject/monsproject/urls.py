@@ -6,7 +6,4 @@ from django.conf.urls.static import static  # Добавьте этот импо
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('monsapp.urls')),  # Включите URL-адреса из вашего приложения monsapp
-]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
