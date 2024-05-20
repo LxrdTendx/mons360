@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
-from .models import License, Statistics, Product
+from .models import License, Statistics, Product, AnatolyStatistics
 
 class LicenseAdmin(admin.ModelAdmin):
     list_display = ('user', 'product', 'license_type', 'license_key', 'expiry_date', 'is_active')
@@ -14,6 +14,12 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'release_date', 'url')  # Отображаемые поля в списке
     search_fields = ('name',)  # Поля, по которым можно осуществлять поиск
 
+class AnatolyStatisticsAdmin(admin.ModelAdmin):
+    list_display = ('name', 'time')
+    search_fields = ('name', )
+
+
+admin.site.register(AnatolyStatistics,AnatolyStatisticsAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Statistics, StatisticsAdmin)
 admin.site.register(License, LicenseAdmin)

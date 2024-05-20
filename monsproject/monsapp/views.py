@@ -2,9 +2,9 @@ from django.contrib.auth import authenticate
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import License, Statistics, Product
+from .models import License, Statistics, Product, AnatolyStatistics
 from django.utils.timezone import now
-from .serializers import StatisticsSerializer, LicenseSerializer, ProductSerializer
+from .serializers import StatisticsSerializer, LicenseSerializer, ProductSerializer, AnatolyStatisticsSerializer
 from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
 from django.db.models import Q
@@ -78,6 +78,7 @@ def user_statistics(request):
 
 
 
+
 class ProductFileDownload(APIView):
     def get(self, request, *args, **kwargs):
         product_id = kwargs.get('product_id')
@@ -139,3 +140,17 @@ class UserProductsView(APIView):
             return Response(serializer.data)
         else:
             return Response({"message": "Authentication failed"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+
+def anatoly_statistics_list(request):
+    statistics = AnatolyStatistics.objects.all()
+    return render(request, 'anatoly_statistics.html', {'statistics': statistics})
+
+class AnatolyStatisticsView(APIView):
+    def post(self, request, format=None):
+        serializer = AnatolyStatisticsSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import LicenseCheck, StatisticsView, UserProductsView, ProductFileDownload, user_login, download_statistics, user_statistics
+from .views import LicenseCheck, StatisticsView, UserProductsView, ProductFileDownload, user_login, download_statistics, user_statistics, AnatolyStatisticsView, anatoly_statistics_list
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -12,6 +12,11 @@ urlpatterns = [
     path('', user_login, name='login'),
     path('statistics/', user_statistics, name='user-statistics'),
     path('download-statistics/', download_statistics, name='download_statistics'),
+
+
+    #Толины ручки для статистики
+    path('anatoly-statistics/', anatoly_statistics_list, name='anatoly_statistics_list'),
+    path('api/anatoly-statistics/', AnatolyStatisticsView.as_view(), name='anatoly_statistics_api'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

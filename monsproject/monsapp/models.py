@@ -56,3 +56,13 @@ class Statistics(models.Model):
 
     def __str__(self):
         return f"{self.product.name if self.product else 'Без продукта'} - {self.full_name}"
+
+
+
+class AnatolyStatistics(models.Model):
+    name = models.CharField(max_length=255, verbose_name='Имя')
+    time = models.TimeField(verbose_name='Время прохождения')
+
+    class Meta:
+        verbose_name = 'Статистику Толи'
+        verbose_name_plural = 'Статистика Толи'
