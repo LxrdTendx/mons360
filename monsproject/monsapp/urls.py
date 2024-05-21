@@ -17,6 +17,7 @@ urlpatterns = [
     #Толины ручки для статистики
     path('anatoly-statistics/', anatoly_statistics_list, name='anatoly_statistics_list'),
     path('api/anatoly-statistics/', AnatolyStatisticsView.as_view(), name='anatoly_statistics_api'),
+    path('api/anatoly-statistics/top/', AnatolyStatisticsView.as_view(), name='anatoly_statistics_top'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
