@@ -156,6 +156,6 @@ class AnatolyStatisticsView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, format=None):
-        top_statistics = AnatolyStatistics.objects.order_by('time')[:4]
+        top_statistics = AnatolyStatistics.objects.order_by('-time')[:4]
         serializer = AnatolyStatisticsSerializer(top_statistics, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
